@@ -58,7 +58,7 @@ st.markdown(
 # 2. Load & prepare data
 
 HERE = Path(__file__).parent         # .../digital-glossary/CODE
-DATA_PATH = HERE.parent / "DATA" / "digital_glossary.xlsx"
+DATA_PATH = HERE.parent / "DATA" / "Digital_glossary.xlsx"
 df = pd.read_excel(DATA_PATH, engine="openpyxl")
 
 df = df[df["Publish_bnry"] == 1].drop(columns=["Comment"])
