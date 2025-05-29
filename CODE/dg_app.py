@@ -57,7 +57,7 @@ st.markdown(
 
 # 2. Load & prepare data
 
-HERE = Path(__file__).parent         # .../digital-glossary/CODE
+HERE = Path(__file__).parent      
 DATA_PATH = HERE.parent / "DATA" / "Digital_glossary.xlsx"
 df = pd.read_excel(DATA_PATH, engine="openpyxl")
 
