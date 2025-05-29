@@ -12,6 +12,12 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    /* hide hamburger menu */
+    #MainMenu { visibility: hidden; }
+    /* hide the footer entirely */
+    footer { visibility: hidden; }
+
+
     /* ─── Sidebar (filter pane) background ───────────────────── */
     [data-testid="stSidebar"] {
         background-color: #0a66c2 !important;
