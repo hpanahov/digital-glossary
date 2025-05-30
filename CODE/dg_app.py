@@ -43,12 +43,10 @@ st.markdown(
 
 
     /* ─── Global scrollbar track ─────────────────────────────── */
-    ::-webkit-scrollbar {
-        width: 20px;               /* fixed wide track */
-    }
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;       /* light track */
-    }
+    /* fixed wide track */
+    ::-webkit-scrollbar {width: 20px; }
+    /* light track */
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
 
     /* ─── Scrollbar thumb (consistent color) ───────────────── */
     ::-webkit-scrollbar-thumb,
@@ -83,7 +81,7 @@ def load_data():
 df = load_data()
 df = df[df["Publish_bnry"] == 1].drop(columns=["Comment"])
 df["Term"] = df["Term"].astype(str)
-df = df.sort_values("Term")
+df = df.sort_values("Term", key=lambda col: col.str.lower())
 
 # 3. Header & caption
 st.title("📖 Digital Glossary")
@@ -92,8 +90,13 @@ st.caption("Published and maintained by the World Bank / Digital Transformation 
 # 4. Sidebar filters
 st.sidebar.title("🔍 Filters")
 letters = sorted({t[0].upper() for t in df["Term"]})
-letter = st.sidebar.selectbox("First letter", ["All"] + letters)
-query = st.sidebar.text_input("Search term or definition")
+letter = st.sidebar.selectbox("First letter", ["All"] + letters, key="letter")
+query = st.sidebar.text_input("Search term or definition", key ="query")
+
+# RESET button
+if st.sidebar.button("Reset filters"):
+    st.session_state.letter = "All"
+    st.session_state.query = ""
 
 # 5. Apply filters
 filtered = df.copy()
