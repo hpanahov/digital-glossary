@@ -94,17 +94,10 @@ if "letter" not in st.session_state:
 if "query" not in st.session_state:
     st.session_state.query = ""
 
-# reset callback
+# define your reset callback
 def reset_filters():
     st.session_state.letter = "All"
     st.session_state.query = ""
-
-# place one single reset‐filters button with a unique key
-st.sidebar.button(
-    "Reset filters",
-    key="btn_reset_filters",    
-    on_click=reset_filters
-)
 
 # the widgets
 letters = sorted({t[0].upper() for t in df["Term"]})
@@ -116,6 +109,13 @@ letter = st.sidebar.selectbox(
 query = st.sidebar.text_input(
     "Search term or definition",
     key="query"
+)
+
+# place one single reset‐filters button with a unique key (moved below TextInput)
+st.sidebar.button(
+    "Reset filters",
+    key="btn_reset_filters",
+    on_click=reset_filters
 )
 
 # 5. Apply filters
