@@ -76,7 +76,7 @@ CSV_URL = (
     f"/export?format=csv&gid={GID}"
 )
 
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=10)
 def load_data():
     return pd.read_csv(CSV_URL)
 
