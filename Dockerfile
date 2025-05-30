@@ -5,11 +5,11 @@ FROM python:3.10-slim
 COPY CODE/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 3) copy in your app source
+# 3) copy app source
 COPY . /app
 WORKDIR /app
 
-# 4) expose the port Streamlit uses
+# 4) Streamlit port 
 EXPOSE 8080
 
 # 5) launch the app
