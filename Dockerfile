@@ -13,4 +13,10 @@ WORKDIR /app
 EXPOSE 8501
 
 # 5) launch your app
-CMD ["streamlit", "run", "CODE/dg_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+#CMD ["streamlit", "run", "CODE/dg_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+
+CMD ["sh","-c", \
+  "streamlit run CODE/dg_app.py \
+   --server.port $PORT \
+   --server.address 0.0.0.0"]
+
