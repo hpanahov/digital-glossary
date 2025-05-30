@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from pathlib import Path
 
 # 1. Page config + CSS
 st.set_page_config(
@@ -12,11 +11,15 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* hide hamburger menu */
-    #MainMenu { visibility: hidden; }
-    /* hide the footer entirely */
-    footer { visibility: hidden; }
+    /*  ─── Remove the top header entirely ───────────────── */
+    header { visibility: hidden; }
 
+    /*  ─── Pull content up to the very top ───────────────── */
+    .block-container { padding-top: 0rem; }
+
+    /* hide built-in hamburger & footer */
+    #MainMenu { visibility: hidden; } 
+    footer { visibility: hidden; }
 
     /* ─── Sidebar (filter pane) background ───────────────────── */
     [data-testid="stSidebar"] {
@@ -37,7 +40,6 @@ st.markdown(
     [data-testid="stAppViewContainer"] * {
         color: #000000 !important;
     }
-
 
 
     /* ─── Global scrollbar track ─────────────────────────────── */
@@ -63,10 +65,18 @@ st.markdown(
 
 # 2. Load & prepare data
 
-HERE = Path(__file__).parent      
-DATA_PATH = HERE.parent / "DATA" / "Digital_glossary.xlsx"
-df = pd.read_excel(DATA_PATH, engine="openpyxl")
+# Google Sheets CSV URL
+SHEET_ID = "12IsT3AZ1wrN1ECn3snwPf5M9oYP5geb1"
+CSV_URL = (
+    f"https://docs.google.com/spreadsheets/d/{SHEET_ID}"
+    "/export?format=csv&gid=0"
+)
 
+@st.cache_data(ttl=300)
+def load_data():
+    return pd.read_csv(CSV_URL)
+
+df = load_data()
 df = df[df["Publish_bnry"] == 1].drop(columns=["Comment"])
 df["Term"] = df["Term"].astype(str)
 df = df.sort_values("Term")
