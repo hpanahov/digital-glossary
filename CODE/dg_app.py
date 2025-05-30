@@ -64,10 +64,8 @@ st.markdown(
 # 2. Load & prepare data
 
 # Google Sheets CSV URL
-
 SHEET_ID = "12IsT3AZ1wrN1ECn3snwPf5M9oYP5geb1"
 GID      = "1289983907"
-
 CSV_URL = (
     f"https://docs.google.com/spreadsheets"
     f"/d/{SHEET_ID}"
@@ -89,14 +87,36 @@ st.caption("Published and maintained by the World Bank / Digital Transformation 
 
 # 4. Sidebar filters
 st.sidebar.title("🔍 Filters")
-letters = sorted({t[0].upper() for t in df["Term"]})
-letter = st.sidebar.selectbox("First letter", ["All"] + letters, key="letter")
-query = st.sidebar.text_input("Search term or definition", key ="query")
 
-# RESET button
-if st.sidebar.button("Reset filters"):
+# seed session_state defaults
+if "letter" not in st.session_state:
+    st.session_state.letter = "All"
+if "query" not in st.session_state:
+    st.session_state.query = ""
+
+# reset callback
+def reset_filters():
     st.session_state.letter = "All"
     st.session_state.query = ""
+
+# place one single reset‐filters button with a unique key
+st.sidebar.button(
+    "Reset filters",
+    key="btn_reset_filters",    
+    on_click=reset_filters
+)
+
+# the widgets
+letters = sorted({t[0].upper() for t in df["Term"]})
+letter = st.sidebar.selectbox(
+    "First letter",
+    ["All"] + letters,
+    key="letter"
+)
+query = st.sidebar.text_input(
+    "Search term or definition",
+    key="query"
+)
 
 # 5. Apply filters
 filtered = df.copy()
