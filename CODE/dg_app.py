@@ -67,10 +67,13 @@ st.markdown(
 
 # Google Sheets CSV URL
 
+SHEET_ID = "12IsT3AZ1wrN1ECn3snwPf5M9oYP5geb1"
+GID      = "1289983907"
+
 CSV_URL = (
-    "https://docs.google.com/spreadsheets/d/e/"
-    "2PACX-1vQp8re05oR_K9w9lA3gt9MzeCtLVSTAsCWX_vU3RqEJbsN-"
-    "_GaNGxq74NM11ZUjAA/pub?gid=1289983907&single=true&output=csv"
+    f"https://docs.google.com/spreadsheets"
+    f"/d/{SHEET_ID}"
+    f"/export?format=csv&gid={GID}"
 )
 
 @st.cache_data(ttl=300)
